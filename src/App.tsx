@@ -65,6 +65,7 @@ export function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
+      <Text style={styles.title}>Tic Tac Toe</Text>
       <Text style={styles.playerTurnText}>
         {`Player ${currentPlayer.toUpperCase()}'s Turn `}
       </Text>
@@ -110,10 +111,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 20,
   },
+  title: {
+    fontFamily: "cursive",
+    color: "#E74292",
+    fontSize: 52,
+    fontWeight: "bold",
+  },
   playerTurnText: {
     color: "white",
     fontWeight: "bold",
     fontSize: 24,
+    marginTop: 60,
   },
   inputBtn: {
     padding: 35,
