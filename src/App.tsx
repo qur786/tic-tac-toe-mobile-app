@@ -5,7 +5,6 @@ import {
   FlatList,
   Pressable,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
 } from "react-native";
@@ -64,7 +63,6 @@ export function App(): React.JSX.Element {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar hidden />
       <Text style={styles.title}>Tic Tac Toe</Text>
       <Text style={styles.playerTurnText}>
         {`Player ${currentPlayer.toUpperCase()}'s Turn `}
