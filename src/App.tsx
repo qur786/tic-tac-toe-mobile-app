@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -9,11 +9,12 @@ import {
 import Snackbar from "react-native-snackbar";
 import { IconComponent } from "./component/IconComponent";
 import { checkGameWinner } from "./utils";
-import type { PlayerInput } from "./utils";
+import type { PlayerInput, Winner } from "./utils";
 
 export function App(): React.JSX.Element {
   const [currentPlayer, setCurrentPlayer] =
     useState<Exclude<PlayerInput, "empty">>("x");
+  const [, setWinner] = useState<Winner>(null);
   const [gameState, setGameState] = useState<PlayerInput[][]>(
     new Array<PlayerInput[]>(3).fill(new Array<PlayerInput>(3).fill("empty"))
   );
@@ -36,16 +37,34 @@ export function App(): React.JSX.Element {
         backgroundColor: "red",
       });
     }
-    // TODO: call it inside a useEffect of useMemo hook
-    const winner = checkGameWinner(gameState);
-    console.log(winner);
+  };
+
+  useEffect(() => {
+    const win = checkGameWinner(gameState);
     if (
       gameState.flat(2).some((ele) => ele === "empty") !== true &&
-      winner === null
+      win === null
     ) {
-      console.log("game over");
+      // TODO: replace it with modal
+      Snackbar.show({
+        text: "Game Over",
+        textColor: "white",
+        duration: Snackbar.LENGTH_LONG,
+        backgroundColor: "red",
+      });
     }
-  };
+
+    if (win !== null) {
+      // TODO: replace it with modal
+      setWinner(win);
+      Snackbar.show({
+        text: `${win} has won the match.`,
+        textColor: "white",
+        duration: Snackbar.LENGTH_LONG,
+        backgroundColor: "red",
+      });
+    }
+  }, [gameState]);
 
   return (
     <SafeAreaView style={styles.container}>
