@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
-  View,
+  Text,
 } from "react-native";
 import Snackbar from "react-native-snackbar";
 import { GameOverModal } from "./component/GameOverModal";
@@ -65,6 +65,9 @@ export function App(): React.JSX.Element {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
+      <Text style={styles.playerTurnText}>
+        {`Player ${currentPlayer.toUpperCase()}'s Turn `}
+      </Text>
       <FlatList
         data={gameState}
         style={styles.flatListMainContainer}
@@ -90,13 +93,7 @@ export function App(): React.JSX.Element {
           );
         }}
       />
-      <View style={styles.reloadBtn}>
-        <Button
-          title="Reload Game"
-          onPress={handleReloadPress}
-          color="#0A79DF"
-        />
-      </View>
+      <Button title="Reload Game" onPress={handleReloadPress} color="#E74292" />
       <GameOverModal
         gameOver={gameOver}
         winner={winner}
@@ -107,7 +104,24 @@ export function App(): React.JSX.Element {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#121212" },
+  container: {
+    flex: 1,
+    backgroundColor: "#121212",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+  playerTurnText: {
+    backgroundColor: "#E74292",
+    color: "white",
+    height: 80,
+    marginHorizontal: 40,
+    borderRadius: 6,
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontWeight: "bold",
+    fontSize: 24,
+    paddingHorizontal: 50,
+  },
   inputBtn: {
     padding: 35,
     backgroundColor: "#2C3335",
@@ -119,5 +133,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  reloadBtn: { width: 180, alignSelf: "center" },
 });
