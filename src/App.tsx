@@ -1,21 +1,49 @@
-import React from "react";
-import { SafeAreaView, StatusBar, Text, useColorScheme } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import React, { useState } from "react";
+import {
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+} from "react-native";
+import { IconComponent } from "./component/IconComponent";
 
 export function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === "dark";
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const [gameState] = useState<string[][]>(
+    new Array<string[]>(3).fill(new Array<string>(3).fill("empty"))
+  );
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? "light-content" : "dark-content"}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <SafeAreaView style={styles.container}>
+      <StatusBar hidden />
+      <FlatList
+        data={gameState}
+        contentContainerStyle={styles.flatListContainer}
+        renderItem={({ item }) => {
+          return (
+            <FlatList
+              key={item.join()}
+              numColumns={3}
+              data={item}
+              renderItem={(value) => (
+                <Pressable key={value.item} style={styles.inputBtn}>
+                  <IconComponent name="empty" />
+                </Pressable>
+              )}
+            />
+          );
+        }}
       />
-      <Text>App</Text>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: "#121212" },
+  inputBtn: {
+    padding: 35,
+    backgroundColor: "#2C3335",
+    borderWidth: 1,
+  },
+  flatListContainer: { alignItems: "center" },
+});
