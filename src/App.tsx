@@ -105,7 +105,7 @@ export function App(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    backgroundColor: "#616C6F",
     alignItems: "center",
     paddingVertical: 20,
   },
@@ -123,8 +123,9 @@ const styles = StyleSheet.create({
   },
   inputBtn: {
     padding: 35,
-    backgroundColor: "#2C3335",
+    backgroundColor: "#586776",
     borderWidth: 1,
+    borderColor: "#8395A7",
   },
   flatListMainContainer: { maxHeight: "50%" },
   flatListContainer: {
