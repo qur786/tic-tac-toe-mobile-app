@@ -9,7 +9,7 @@ import {
 import { IconComponent } from "./component/IconComponent";
 
 export function App(): React.JSX.Element {
-  const [currentPlayer, setCurrentPlayer] = useState<"x" | "o">("o");
+  const [currentPlayer, setCurrentPlayer] = useState<"x" | "o">("x");
   const [gameState, setGameState] = useState<string[][]>(
     new Array<string[]>(3).fill(new Array<string>(3).fill("empty"))
   );
