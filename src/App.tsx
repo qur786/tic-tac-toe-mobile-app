@@ -9,9 +9,27 @@ import {
 import { IconComponent } from "./component/IconComponent";
 
 export function App(): React.JSX.Element {
-  const [gameState] = useState<string[][]>(
+  const [currentPlayer, setCurrentPlayer] = useState<"x" | "o">("o");
+  const [gameState, setGameState] = useState<string[][]>(
     new Array<string[]>(3).fill(new Array<string>(3).fill("empty"))
   );
+
+  const handleButtonPress = (rowIndex: number, colIndex: number) => {
+    if (gameState[rowIndex][colIndex] === "empty") {
+      setGameState((prev) => {
+        const newState = [...prev];
+        const newInnerState = [...newState[rowIndex]];
+        newInnerState[colIndex] = currentPlayer;
+        newState[rowIndex] = newInnerState;
+        return newState;
+      });
+      setCurrentPlayer((prev) => (prev === "x" ? "o" : "x"));
+    } else {
+      // TODO: add snackbar notification.
+      console.log("Can't take input in already filled box.");
+    }
+    // TODO: add check game winner function call.
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,15 +37,21 @@ export function App(): React.JSX.Element {
       <FlatList
         data={gameState}
         contentContainerStyle={styles.flatListContainer}
-        renderItem={({ item }) => {
+        renderItem={({ item: rowItem, index: rowIndex }) => {
           return (
             <FlatList
-              key={item.join()}
+              key={rowItem.join()}
               numColumns={3}
-              data={item}
-              renderItem={(value) => (
-                <Pressable key={value.item} style={styles.inputBtn}>
-                  <IconComponent name="empty" />
+              data={rowItem}
+              renderItem={({ item: colItem, index: colIndex }) => (
+                <Pressable
+                  key={colItem}
+                  android_ripple={{
+                    color: "yellow",
+                  }}
+                  style={styles.inputBtn}
+                  onPress={() => handleButtonPress(rowIndex, colIndex)}>
+                  <IconComponent name={colItem} />
                 </Pressable>
               )}
             />
