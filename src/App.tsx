@@ -6,6 +6,7 @@ import {
   StatusBar,
   StyleSheet,
 } from "react-native";
+import Snackbar from "react-native-snackbar";
 import { IconComponent } from "./component/IconComponent";
 import { checkGameWinner } from "./utils";
 import type { PlayerInput } from "./utils";
@@ -28,8 +29,12 @@ export function App(): React.JSX.Element {
       });
       setCurrentPlayer((prev) => (prev === "x" ? "o" : "x"));
     } else {
-      // TODO: add snackbar notification.
-      console.log("Can't take input in already filled box.");
+      Snackbar.show({
+        text: "Cannot update the current box, already filled, choose other.",
+        textColor: "white",
+        duration: Snackbar.LENGTH_LONG,
+        backgroundColor: "red",
+      });
     }
     // TODO: call it inside a useEffect of useMemo hook
     const winner = checkGameWinner(gameState);
