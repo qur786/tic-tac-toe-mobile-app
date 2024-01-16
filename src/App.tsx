@@ -82,7 +82,7 @@ export function App(): React.JSX.Element {
                 <Pressable
                   key={colItem}
                   android_ripple={{
-                    color: "yellow",
+                    color: "white",
                   }}
                   style={styles.inputBtn}
                   onPress={() => handleBoxPress(rowIndex, colIndex)}>

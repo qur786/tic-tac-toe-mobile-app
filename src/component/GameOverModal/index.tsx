@@ -21,13 +21,13 @@ export function GameOverModal({
           // eslint-disable-next-line react-native/no-inline-styles
           style={{
             ...styles.result,
-            color: typeof winner === "string" ? "#67E6DC" : "red",
+            color: typeof winner === "string" ? "#67E6DC" : "#BA2F16",
           }}>
           {typeof winner === "string"
             ? `Player ${winner.toUpperCase()} Won`
             : "Game Over"}
         </Text>
-        <Button title="Play Again" onPress={handleRestart} />
+        <Button title="Play Again" onPress={handleRestart} color="#E74292" />
       </View>
     </Modal>
   );
