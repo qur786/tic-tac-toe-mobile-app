@@ -111,16 +111,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   playerTurnText: {
-    backgroundColor: "#E74292",
     color: "white",
-    height: 80,
-    marginHorizontal: 40,
-    borderRadius: 6,
-    textAlign: "center",
-    textAlignVertical: "center",
     fontWeight: "bold",
     fontSize: 24,
-    paddingHorizontal: 50,
   },
   inputBtn: {
     padding: 35,
