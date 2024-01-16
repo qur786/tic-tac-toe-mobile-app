@@ -17,15 +17,10 @@ export function GameOverModal({
   return (
     <Modal visible={gameOver || typeof winner === "string"} transparent>
       <View style={styles.resultContainer}>
-        <Text
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{
-            ...styles.result,
-            color: typeof winner === "string" ? "#67E6DC" : "#BA2F16",
-          }}>
+        <Text style={styles.result}>
           {typeof winner === "string"
             ? `Player ${winner.toUpperCase()} Won`
-            : "Game Over"}
+            : "Game Draw"}
         </Text>
         <Button title="Play Again" onPress={handleRestart} color="#E74292" />
       </View>
@@ -46,5 +41,6 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
     fontSize: 32,
     fontWeight: "bold",
+    color: "#67E6DC",
   },
 });
