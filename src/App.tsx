@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import type { ButtonProps } from "react-native";
 import {
+  Button,
   FlatList,
   Pressable,
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  View,
 } from "react-native";
 import Snackbar from "react-native-snackbar";
 import { IconComponent } from "./component/IconComponent";
@@ -39,6 +42,14 @@ export function App(): React.JSX.Element {
     }
   };
 
+  const handleReloadPress: ButtonProps["onPress"] = () => {
+    setCurrentPlayer("x");
+    setWinner(null);
+    setGameState(
+      new Array<PlayerInput[]>(3).fill(new Array<PlayerInput>(3).fill("empty"))
+    );
+  };
+
   useEffect(() => {
     const win = checkGameWinner(gameState);
     if (
@@ -71,6 +82,7 @@ export function App(): React.JSX.Element {
       <StatusBar hidden />
       <FlatList
         data={gameState}
+        style={styles.flatListMainContainer}
         contentContainerStyle={styles.flatListContainer}
         renderItem={({ item: rowItem, index: rowIndex }) => {
           return (
@@ -93,6 +105,13 @@ export function App(): React.JSX.Element {
           );
         }}
       />
+      <View style={styles.reloadBtn}>
+        <Button
+          title="Reload Game"
+          onPress={handleReloadPress}
+          color="#0A79DF"
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -104,5 +123,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#2C3335",
     borderWidth: 1,
   },
-  flatListContainer: { alignItems: "center" },
+  flatListMainContainer: { maxHeight: "50%" },
+  flatListContainer: {
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  reloadBtn: { width: 180, alignSelf: "center" },
 });
