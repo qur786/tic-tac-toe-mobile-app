@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import Snackbar from "react-native-snackbar";
+import { GameOverModal } from "./component/GameOverModal";
 import { IconComponent } from "./component/IconComponent";
 import { checkGameWinner } from "./utils";
 import type { PlayerInput, Winner } from "./utils";
@@ -17,12 +18,13 @@ import type { PlayerInput, Winner } from "./utils";
 export function App(): React.JSX.Element {
   const [currentPlayer, setCurrentPlayer] =
     useState<Exclude<PlayerInput, "empty">>("x");
-  const [, setWinner] = useState<Winner>(null);
+  const [winner, setWinner] = useState<Winner>(null);
   const [gameState, setGameState] = useState<PlayerInput[][]>(
     new Array<PlayerInput[]>(3).fill(new Array<PlayerInput>(3).fill("empty"))
   );
+  const [gameOver, setGameOver] = useState(false);
 
-  const handleButtonPress = (rowIndex: number, colIndex: number) => {
+  const handleBoxPress = (rowIndex: number, colIndex: number) => {
     if (gameState[rowIndex][colIndex] === "empty") {
       setGameState((prev) => {
         const newState = [...prev];
@@ -48,32 +50,15 @@ export function App(): React.JSX.Element {
     setGameState(
       new Array<PlayerInput[]>(3).fill(new Array<PlayerInput>(3).fill("empty"))
     );
+    setGameOver(false);
   };
 
   useEffect(() => {
     const win = checkGameWinner(gameState);
-    if (
-      gameState.flat(2).some((ele) => ele === "empty") !== true &&
-      win === null
-    ) {
-      // TODO: replace it with modal
-      Snackbar.show({
-        text: "Game Over",
-        textColor: "white",
-        duration: Snackbar.LENGTH_LONG,
-        backgroundColor: "red",
-      });
-    }
-
-    if (win !== null) {
-      // TODO: replace it with modal
+    if (typeof win === "string") {
       setWinner(win);
-      Snackbar.show({
-        text: `${win} has won the match.`,
-        textColor: "white",
-        duration: Snackbar.LENGTH_LONG,
-        backgroundColor: "red",
-      });
+    } else if (gameState.flat(2).some((ele) => ele === "empty") !== true) {
+      setGameOver(true);
     }
   }, [gameState]);
 
@@ -97,7 +82,7 @@ export function App(): React.JSX.Element {
                     color: "yellow",
                   }}
                   style={styles.inputBtn}
-                  onPress={() => handleButtonPress(rowIndex, colIndex)}>
+                  onPress={() => handleBoxPress(rowIndex, colIndex)}>
                   <IconComponent name={colItem} />
                 </Pressable>
               )}
@@ -112,6 +97,11 @@ export function App(): React.JSX.Element {
           color="#0A79DF"
         />
       </View>
+      <GameOverModal
+        gameOver={gameOver}
+        winner={winner}
+        handleRestart={handleReloadPress}
+      />
     </SafeAreaView>
   );
 }

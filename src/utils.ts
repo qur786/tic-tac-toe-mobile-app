@@ -1,5 +1,5 @@
 export type PlayerInput = "x" | "o" | "empty";
-type Winner = "x" | "o" | null;
+export type Winner = "x" | "o" | null;
 
 export function checkGameWinner(input: PlayerInput[][]): Winner {
   let winner: Winner = null;
