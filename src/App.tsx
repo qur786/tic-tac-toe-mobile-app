@@ -7,11 +7,14 @@ import {
   StyleSheet,
 } from "react-native";
 import { IconComponent } from "./component/IconComponent";
+import { checkGameWinner } from "./utils";
+import type { PlayerInput } from "./utils";
 
 export function App(): React.JSX.Element {
-  const [currentPlayer, setCurrentPlayer] = useState<"x" | "o">("x");
-  const [gameState, setGameState] = useState<string[][]>(
-    new Array<string[]>(3).fill(new Array<string>(3).fill("empty"))
+  const [currentPlayer, setCurrentPlayer] =
+    useState<Exclude<PlayerInput, "empty">>("x");
+  const [gameState, setGameState] = useState<PlayerInput[][]>(
+    new Array<PlayerInput[]>(3).fill(new Array<PlayerInput>(3).fill("empty"))
   );
 
   const handleButtonPress = (rowIndex: number, colIndex: number) => {
@@ -28,7 +31,15 @@ export function App(): React.JSX.Element {
       // TODO: add snackbar notification.
       console.log("Can't take input in already filled box.");
     }
-    // TODO: add check game winner function call.
+    // TODO: call it inside a useEffect of useMemo hook
+    const winner = checkGameWinner(gameState);
+    console.log(winner);
+    if (
+      gameState.flat(2).some((ele) => ele === "empty") !== true &&
+      winner === null
+    ) {
+      console.log("game over");
+    }
   };
 
   return (
