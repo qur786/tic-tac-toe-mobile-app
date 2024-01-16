@@ -1,6 +1,6 @@
 import React from "react";
 import type { ButtonProps } from "react-native";
-import { Modal, View, Text, Button } from "react-native";
+import { Modal, View, Text, Button, StyleSheet } from "react-native";
 import type { Winner } from "../../utils";
 
 interface GameOverModalProps {
@@ -16,21 +16,12 @@ export function GameOverModal({
 }: GameOverModalProps): JSX.Element {
   return (
     <Modal visible={gameOver || typeof winner === "string"} transparent>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "#758AA2",
-          gap: 40,
-        }}>
+      <View style={styles.resultContainer}>
         <Text
+          // eslint-disable-next-line react-native/no-inline-styles
           style={{
-            textAlign: "center",
-            textAlignVertical: "center",
+            ...styles.result,
             color: typeof winner === "string" ? "#67E6DC" : "red",
-            fontSize: 32,
-            fontWeight: "bold",
           }}>
           {typeof winner === "string"
             ? `Player ${winner.toUpperCase()} Won`
@@ -41,3 +32,19 @@ export function GameOverModal({
     </Modal>
   );
 }
+
+const styles = StyleSheet.create({
+  resultContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#758AA2",
+    gap: 40,
+  },
+  result: {
+    textAlign: "center",
+    textAlignVertical: "center",
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+});
