@@ -1,12 +1,12 @@
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-interface IconComponentProps {
+interface PlayerIconProps {
   name: string;
   size?: number;
 }
 
-export function IconComponent({ name, size }: IconComponentProps): JSX.Element {
+export function PlayerIcon({ name, size }: PlayerIconProps): JSX.Element {
   let component = (
     <Icon name="question-circle" color="#DAE0E2" size={size ?? 24} />
   );

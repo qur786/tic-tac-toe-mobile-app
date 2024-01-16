@@ -1,7 +1,7 @@
 import React from "react";
 import type { ButtonProps } from "react-native";
 import { Modal, View, Text, Button, StyleSheet } from "react-native";
-import type { Winner } from "../../utils";
+import type { Winner } from "../../game-logic";
 
 interface GameOverModalProps {
   gameOver: boolean;

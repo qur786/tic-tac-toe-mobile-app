@@ -11,9 +11,9 @@ import {
 } from "react-native";
 import Snackbar from "react-native-snackbar";
 import { GameOverModal } from "./component/GameOverModal";
-import { IconComponent } from "./component/IconComponent";
-import { checkGameWinner } from "./utils";
-import type { PlayerInput, Winner } from "./utils";
+import { PlayerIcon } from "./component/PlayerIcon";
+import { checkGameWinner } from "./game-logic";
+import type { PlayerInput, Winner } from "./game-logic";
 
 export function App(): React.JSX.Element {
   const [currentPlayer, setCurrentPlayer] =
@@ -87,7 +87,7 @@ export function App(): React.JSX.Element {
                   }}
                   style={styles.inputBtn}
                   onPress={() => handleBoxPress(rowIndex, colIndex)}>
-                  <IconComponent name={colItem} />
+                  <PlayerIcon name={colItem} />
                 </Pressable>
               )}
             />
